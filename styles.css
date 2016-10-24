@@ -70,6 +70,7 @@ h1 {
   border: none;
   height: 25px;
   width: 25px;
+  outline: none;
 }
 
 .upvote {

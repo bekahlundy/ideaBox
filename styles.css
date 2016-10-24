@@ -1,0 +1,45 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+header {
+  background-color: #e5f3f2;
+  height: 250px;
+}
+
+h1 {
+  display: inline-block;
+  font-size:50px;
+  font-family: 'Roboto Slab', serif;
+  margin: 0 auto;
+}
+
+.logo {
+  text-align: center;
+}
+
+.idea {
+  color: #00a79d;
+}
+
+.box {
+  color: #6d6e71;
+}
+
+.input-title, .input-body, .input-search, .save-button {
+  display: block;
+  font-size: 20px;
+  margin: 25px auto;
+  height: 25px;
+  width: 50%;
+}
+
+.save-button {
+  background-color: #00a79d;
+  border: none;
+  color: #ffffff;
+}
+
+.save-button:hover {
+  background-color: #045e55;
+}

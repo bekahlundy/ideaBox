@@ -13,9 +13,9 @@ function createCards() {
     <h2 class='card-title'>${title.val()}</h2>
     <p class='card-body'>${body.val()}</p>
     <p class='quality'></p>
-    <button class='upvote'></button>
-    <button class='downvote'></button>
-    <button class='delete'></button>
+    <button class='upvote card-buttons'></button>
+    <button class='downvote card-buttons'></button>
+    <button class='delete card-buttons'></button>
     </li>`
   )
 };

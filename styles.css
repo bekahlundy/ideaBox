@@ -4,14 +4,14 @@ body {
 
 header {
   background-color: #e5f3f2;
-  height: 250px;
+  height: 300px;
 }
 
 h1 {
   display: inline-block;
   font-size:50px;
   font-family: 'Roboto Slab', serif;
-  margin: 0 auto;
+  margin: 20px auto;
 }
 
 .logo {
@@ -32,6 +32,7 @@ h1 {
   margin: 25px auto;
   height: 25px;
   width: 50%;
+  border: 2px solid #d1d3d4;
 }
 
 .save-button {
@@ -42,4 +43,52 @@ h1 {
 
 .save-button:hover {
   background-color: #045e55;
+}
+
+.card {
+  border-bottom: 2px solid #d1d3d4;
+  height: 150px;
+  margin: 10px auto;
+  overflow:auto;
+  width: 50%;
+}
+.card-title {
+  color: #6d6e71;
+  font-size: 25px;
+  font-family: 'Roboto Slab', serif;
+  margin: 10px 0;
+}
+
+.card-body {
+  color: #939598;
+  margin-bottom: 10px;
+}
+
+.card-buttons {
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  height: 25px;
+  width: 25px;
+}
+
+.upvote {
+  background-image: url('upvote.svg');
+}
+.upvote:hover {
+  background-image: url('upvote-hover.svg');
+}
+
+.downvote {
+  background-image: url('downvote.svg');
+}
+.downvote:hover {
+  background-image: url('downvote-hover.svg');
+}
+
+.delete {
+  background-image: url('delete.svg');
+}
+.delete:hover {
+  background-image: url('delete-hover.svg');
 }

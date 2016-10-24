@@ -19,3 +19,7 @@ function createCards() {
     </li>`
   )
 };
+
+$('.bottom-section').on('click', '.delete', function() {
+  $(this).closest('li').remove();
+})

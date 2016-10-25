@@ -1,41 +1,14 @@
+
 var $title = $('.input-title');
 var $body = $('.input-body');
 var $search = $('.input-search');
 var $saveButton = $('.save-button');
 
-$saveButton.on('click', function() {
-  var title = $title.val();
-  var body = $body.val();
-  var newIdea = new Idea(title, body);
-  newIdea.storeIdea();
-
-  // getIdeasAndDisplay(); grab from localStorage, iterate through ideas, for each idea call on createCard();
-  getIdeasAndDisplay();
-  title.val('');
-  body.val('');
-});
-// only holds for one idea
 function Idea(title, body) {
   this.title= title;
   this.body = body;
   this.id = Date.now();
   this.quality = 'swill';
-}
-
-Idea.prototype.storeIdea = function () {
-  var allIdeas = getIdeasFromLocalStorage();
-  allIdeas.push(this);
-  localStorage.setItem("ideas", JSON.stringify(allIdeas))
-};
-
-function getIdeasAndDisplay() {
-  var ideas = JSON.parse(localStorage.getItem("ideas"));
-  // iterate through ideas and for each one call on createCard(idea)
-  
-}
-
-function getIdeasFromLocalStorage() {
-  return JSON.parse(localStorage.getItem("ideas"))
 }
 
 function createCard(idea) {
@@ -51,6 +24,49 @@ function createCard(idea) {
   )
 };
 
+$saveButton.on('click', function() {
+  var title = $title.val();
+  var body = $body.val();
+  var newIdea = new Idea(title, body);
+  localStorage.setItem(title, body);
+  storeIdea(newIdea);
+
+
+  getIdeasAndDisplay();
+  $title.val('');
+  $body.val('');
+});
+
+checkIdeas();
+
+function storeIdea(newIdea) {
+  var allIdeas = getIdeasFromLocalStorage();
+  allIdeas.push(newIdea);
+  localStorage.setItem("ideas", JSON.stringify(allIdeas))
+};
+
+function getIdeasFromLocalStorage() {
+  return JSON.parse(localStorage.getItem("ideas"))
+};
+
+function getIdeasAndDisplay() {
+  var ideas = JSON.parse(localStorage.getItem("ideas"));
+  for (var i = 0; ideas.length>i; i++) {
+
+  createCard(ideas[i]);
+}
+    // getIdeasAndDisplay(); grab from localStorage, iterate through ideas, for each idea call on createCard();
+
+};
+
+function checkIdeas() {
+  var currentIdeas = localStorage.getItem("ideas");
+  if (!currentIdeas) {
+    localStorage.setItem("ideas", JSON.stringify([]))
+  }
+}
+
+
 $('.bottom-section').on('click', '.delete', function() {
   $(this).closest('li').remove();
 });
@@ -61,12 +77,3 @@ $('.bottom-section').on('click', '.upvote', function() {
    var selector = $(quality).val('');
    $(quality).text('quality: swill');
 });
-
-checkIdeas();
-
-function checkIdeas() {
-  var currentIdeas = localStorage.getItem("ideas");
-  if (!currentIdeas) {
-    localStorage.setItem("ideas", JSON.stringify([]))
-  }
-}

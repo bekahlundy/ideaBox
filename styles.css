@@ -56,7 +56,11 @@ h1 {
   color: #6d6e71;
   font-size: 25px;
   font-family: 'Roboto Slab', serif;
-  margin: 10px 0;
+  margin: 15px 0;
+}
+
+.quality {
+  margin: 15px 0;
 }
 
 .card-body {
@@ -89,6 +93,7 @@ h1 {
 
 .delete {
   background-image: url('delete.svg');
+  float: right;
 }
 .delete:hover {
   background-image: url('delete-hover.svg');

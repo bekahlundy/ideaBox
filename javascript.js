@@ -1,11 +1,12 @@
-
 var $title = $('.input-title');
 var $body = $('.input-body');
 var $search = $('.input-search');
 var $saveButton = $('.save-button');
 
+checkIdeas();
+
 function Idea(title, body) {
-  this.title= title;
+  this.title = title;
   this.body = body;
   this.id = Date.now();
   this.quality = 'swill';
@@ -27,17 +28,12 @@ function createCard(idea) {
 $saveButton.on('click', function() {
   var title = $title.val();
   var body = $body.val();
-  var newIdea = new Idea(title, body);
-  localStorage.setItem(title, body);
+  var newIdea = new Idea(title, body); //new instance of Idea
   storeIdea(newIdea);
-
-
-  getIdeasAndDisplay();
+  createCard(newIdea);
   $title.val('');
   $body.val('');
 });
-
-checkIdeas();
 
 function storeIdea(newIdea) {
   var allIdeas = getIdeasFromLocalStorage();
@@ -49,14 +45,12 @@ function getIdeasFromLocalStorage() {
   return JSON.parse(localStorage.getItem("ideas"))
 };
 
-function getIdeasAndDisplay() {
+function getAllIdeasAndDisplay() {
+  // grab from localStorage, iterate through ideas, for each idea call on createCard();
   var ideas = JSON.parse(localStorage.getItem("ideas"));
   for (var i = 0; ideas.length>i; i++) {
-
-  createCard(ideas[i]);
-}
-    // getIdeasAndDisplay(); grab from localStorage, iterate through ideas, for each idea call on createCard();
-
+    createCard(ideas[i]);
+  }
 };
 
 function checkIdeas() {
@@ -66,14 +60,12 @@ function checkIdeas() {
   }
 }
 
-
 $('.bottom-section').on('click', '.delete', function() {
   $(this).closest('li').remove();
 });
 
-
 $('.bottom-section').on('click', '.upvote', function() {
-   var quality = $(this).siblings('.quality');
-   var selector = $(quality).val('');
-   $(quality).text('quality: swill');
+  var quality = $(this).siblings('.quality');
+  var selector = $(quality).val('');
+  $(quality).text('quality: swill');
 });

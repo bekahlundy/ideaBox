@@ -1,5 +1,3 @@
-
-
 function Idea(title, body, id) {
   this.title= title;
   this.body = body;
@@ -7,17 +5,15 @@ function Idea(title, body, id) {
   this.quality = 'swill';
 }
 
-
 $('.save-button').on('click', function() {
   var title = $('.input-title').val();
   var body = $('.input-body').val();
   var ideaBox = new Idea(title, body, Date.now());
   var key = ideaBox.id;
-  localStorage.setItem(key, JSON.stringify(ideaBox))
-  createCard(title, body, ideaBox.id, ideaBox.quality);
+  localStorage.setItem(key, JSON.stringify(ideaBox));
+  createCard(ideaBox);
   emptyInputs();
 })
-
 
 function createCard(idea) {
   $('.bottom-section').prepend(
@@ -31,6 +27,62 @@ function createCard(idea) {
     </li>`
   )
 };
+
+$('.bottom-section').on('click', '.upvote', '.downvote', function() {
+  var selector = $(this).attr('class');
+  var quality = $(this).closest('.card').find('quality')
+  var newQuality = getNewQuality(selector, quality.text());
+  var key = $(this).closest('.card').attr('id');
+  var ideaBox = JSON.parse(localstorage.getItem(key));
+  ideaBox.quality = newQuality;
+  localStorage.setItem(key, JSON.stringify(ideaBox));
+  quality.text(newQuality);
+})
+
+$('.input-title, .input-body').on('keydown', function(event) {
+  if (event.keyCode === 13)
+      $('.save-button').click();
+})
+
+$('.input-search').on('keyup', function() {
+  var searchValue = $(this).val().toLowerCase();
+  $('.card').each(function() {
+    var titleText = $(this).find('.card-title').text().toLowerCase();
+    var bodyText = $(this).find('.card-body').text().toLowerCase();
+
+    titleText.indexOf(searchValue) !== -1 ||
+    bodyText.indexOf(searchValue) !== -1
+      ? $(this).show() : $(this).hide();
+
+
+    });
+})
+
+function getNewQuality(selector, quality) {
+  if(selector === 'upvote card-buttons') {
+    return upVote(quality);
+  } else {
+    return downVote(quality);
+  }
+}
+
+function upVote(quality) {
+  switch (quality) {
+    case 'swill':
+      return 'plausible';
+    case 'plausible':
+      return 'genius';
+  }
+}
+
+function downVote(quality) {
+  switch (quality) {
+    case 'genius':
+      return 'plausible';
+    case 'plausible':
+      return 'swill'
+  }
+}
 
 function emptyInputs() {
   $('.input-title').val('');

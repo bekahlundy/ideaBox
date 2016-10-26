@@ -1,3 +1,10 @@
+$(function() {
+  for(var i = 0; localStorage.length > i; i++) {
+    var ideabox = JSON.parse(localStorage.getItem(localStorage.key(i)))
+    createCard(ideabox);
+  }
+})
+
 function Idea(title, body, id) {
   this.title= title;
   this.body = body;
@@ -42,6 +49,9 @@ $('.bottom-section').on('click', '.upvote, .downvote', function() {
 
 $('.bottom-section').on('click', '.delete', function() {
   $(this).parent('li').remove();
+  var selector = $(this).closest('.card');
+  localStorage.removeItem(selector.attr('id'));
+  $(selector).remove();
 })
 
 $('.input-title, .input-body').on('keydown', function(event) {

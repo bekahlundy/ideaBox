@@ -1,13 +1,10 @@
 $(function() {
-<<<<<<< HEAD
   for (i=0; localStorage.length>i; i++) {
-=======
-  for(var i = 0; localStorage.length > i; i++) {
->>>>>>> 7ded58035c5e6dd863235cd78be37c5a4b142184
-    var ideabox = JSON.parse(localStorage.getItem(localStorage.key(i)))
+    var ideabox = JSON.parse(localStorage.getItem(localStorage.key(i)));
     createCard(ideabox);
   }
-})
+});
+
 
 function Idea(title, body, id) {
   this.title= title;
@@ -55,14 +52,24 @@ $('.bottom-section').on('click', '.delete', function() {
   $(this).parent('li').remove();
   var selector = $(this).closest('.card');
   localStorage.removeItem(selector.attr('id'));
-<<<<<<< HEAD
   selector.remove();
-=======
-  $(selector).remove();
->>>>>>> 7ded58035c5e6dd863235cd78be37c5a4b142184
 })
 
+$('.bottom-section').on('focus', '.card-body .card-title', function() {
+  var selector = $(this).closest('.card');
+  var key = selector.attr('id');
+  var ideabox = JSON.parse(localStorage.getItem(key));
+  $(this).on('keydown', function() {
+    if (event.keyCode === 13)
+    event.preventDefault();
+    $(this).blur();
+    return false;
+  })
+})
 
+$(this).on('blur', function() {
+  
+})
 
 $('.input-title, .input-body').on('keydown', function(event) {
   if (event.keyCode === 13)

@@ -40,6 +40,11 @@ $('.bottom-section').on('click', '.upvote, .downvote', function() {
   quality.text(newQuality);
 })
 
+$('.bottom-section').on('click', '.delete', function() {
+  $(this).parent('li').remove();
+
+})
+
 $('.input-title, .input-body').on('keydown', function(event) {
   if (event.keyCode === 13)
       $('.save-button').click();

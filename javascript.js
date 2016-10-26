@@ -19,8 +19,8 @@ function createCard(idea) {
   $('.bottom-section').prepend(
     `<li class='card' id='${idea.id}'>
     <button class='delete card-buttons'></button>
-    <h2 class='card-title'>${idea.title}</h2>
-    <p class='card-body'>${idea.body}</p>
+    <h2 class='card-title' contenteditable>${idea.title}</h2>
+    <p class='card-body' contenteditable>${idea.body}</p>
     <button class='upvote card-buttons'></button>
     <button class='downvote card-buttons'></button>
     <p class='thewordquality'> quality: </p>

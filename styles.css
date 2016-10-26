@@ -66,6 +66,7 @@ h1 {
   font-size: 25px;
   font-family: 'Roboto Slab', serif;
   margin: 15px 0;
+  outline: none;
 }
 
 .quality {
@@ -86,6 +87,7 @@ h1 {
 .card-body {
   color: #939598;
   margin-bottom: 10px;
+  outline: none;
 }
 
 .card-buttons {

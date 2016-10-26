@@ -1,15 +1,23 @@
 
-var $title = $('.input-title');
-var $body = $('.input-body');
-var $search = $('.input-search');
-var $saveButton = $('.save-button');
 
-function Idea(title, body) {
+function Idea(title, body, id) {
   this.title= title;
   this.body = body;
-  this.id = Date.now();
+  this.id = id;
   this.quality = 'swill';
 }
+
+
+$('.save-button').on('click', function() {
+  var title = $('.input-title').val();
+  var body = $('.input-body').val();
+  var ideaBox = new Idea(title, body, Date.now());
+  var key = ideaBox.id;
+  localStorage.setItem(key, JSON.stringify(ideaBox))
+  createCard(title, body, ideaBox.id, ideaBox.quality);
+  emptyInputs();
+})
+
 
 function createCard(idea) {
   $('.bottom-section').prepend(
@@ -24,56 +32,7 @@ function createCard(idea) {
   )
 };
 
-$saveButton.on('click', function() {
-  var title = $title.val();
-  var body = $body.val();
-  var newIdea = new Idea(title, body);
-  localStorage.setItem(title, body);
-  storeIdea(newIdea);
-
-
-  getIdeasAndDisplay();
-  $title.val('');
-  $body.val('');
-});
-
-checkIdeas();
-
-function storeIdea(newIdea) {
-  var allIdeas = getIdeasFromLocalStorage();
-  allIdeas.push(newIdea);
-  localStorage.setItem("ideas", JSON.stringify(allIdeas))
-};
-
-function getIdeasFromLocalStorage() {
-  return JSON.parse(localStorage.getItem("ideas"))
-};
-
-function getIdeasAndDisplay() {
-  var ideas = JSON.parse(localStorage.getItem("ideas"));
-  for (var i = 0; ideas.length>i; i++) {
-
-  createCard(ideas[i]);
+function emptyInputs() {
+  $('.input-title').val('');
+  $('.input-body').val('');
 }
-    // getIdeasAndDisplay(); grab from localStorage, iterate through ideas, for each idea call on createCard();
-
-};
-
-function checkIdeas() {
-  var currentIdeas = localStorage.getItem("ideas");
-  if (!currentIdeas) {
-    localStorage.setItem("ideas", JSON.stringify([]))
-  }
-}
-
-
-$('.bottom-section').on('click', '.delete', function() {
-  $(this).closest('li').remove();
-});
-
-
-$('.bottom-section').on('click', '.upvote', function() {
-   var quality = $(this).siblings('.quality');
-   var selector = $(quality).val('');
-   $(quality).text('quality: swill');
-});

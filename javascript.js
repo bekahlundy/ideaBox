@@ -20,7 +20,8 @@ function createCard(idea) {
     `<li class='card' id='${idea.id}'>
     <h2 class='card-title'>${idea.title}</h2>
     <p class='card-body'>${idea.body}</p>
-    <p class='quality'>quality: ${idea.quality}</p>
+    <p>quality: </p>
+    <p class='quality'>${idea.quality}</p>
     <button class='upvote card-buttons'></button>
     <button class='downvote card-buttons'></button>
     <button class='delete card-buttons'></button>
@@ -28,12 +29,12 @@ function createCard(idea) {
   )
 };
 
-$('.bottom-section').on('click', '.upvote', '.downvote', function() {
+$('.bottom-section').on('click', '.upvote, .downvote', function() {
   var selector = $(this).attr('class');
-  var quality = $(this).closest('.card').find('quality')
+  var quality = $(this).closest('.card').find('.quality');
   var newQuality = getNewQuality(selector, quality.text());
   var key = $(this).closest('.card').attr('id');
-  var ideaBox = JSON.parse(localstorage.getItem(key));
+  var ideaBox = JSON.parse(localStorage.getItem(key));
   ideaBox.quality = newQuality;
   localStorage.setItem(key, JSON.stringify(ideaBox));
   quality.text(newQuality);
@@ -49,12 +50,9 @@ $('.input-search').on('keyup', function() {
   $('.card').each(function() {
     var titleText = $(this).find('.card-title').text().toLowerCase();
     var bodyText = $(this).find('.card-body').text().toLowerCase();
-
     titleText.indexOf(searchValue) !== -1 ||
     bodyText.indexOf(searchValue) !== -1
       ? $(this).show() : $(this).hide();
-
-
     });
 })
 
@@ -72,6 +70,8 @@ function upVote(quality) {
       return 'plausible';
     case 'plausible':
       return 'genius';
+    default:
+      return "genius";
   }
 }
 
@@ -80,7 +80,9 @@ function downVote(quality) {
     case 'genius':
       return 'plausible';
     case 'plausible':
-      return 'swill'
+      return 'swill';
+    default:
+      return "swill";
   }
 }
 

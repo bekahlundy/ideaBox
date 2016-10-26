@@ -1,5 +1,9 @@
 $(function() {
+<<<<<<< HEAD
   for (i=0; localStorage.length>i; i++) {
+=======
+  for(var i = 0; localStorage.length > i; i++) {
+>>>>>>> 7ded58035c5e6dd863235cd78be37c5a4b142184
     var ideabox = JSON.parse(localStorage.getItem(localStorage.key(i)))
     createCard(ideabox);
   }
@@ -51,7 +55,11 @@ $('.bottom-section').on('click', '.delete', function() {
   $(this).parent('li').remove();
   var selector = $(this).closest('.card');
   localStorage.removeItem(selector.attr('id'));
+<<<<<<< HEAD
   selector.remove();
+=======
+  $(selector).remove();
+>>>>>>> 7ded58035c5e6dd863235cd78be37c5a4b142184
 })
 
 

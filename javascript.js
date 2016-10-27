@@ -24,10 +24,9 @@ function createCard(idea) {
     <p class='quality'>${idea.quality}</p>
     </li>`
   )
-};
+}
 
-$('.bottom-section').on('focus', '.card-body .card-title', function() {
-  console.log(createCard());
+$('.bottom-section').on('focus', '.card-body, .card-title', function() {
   var selector = $(this).closest('.card');
   var key = selector.attr('id');
   var ideabox = JSON.parse(localStorage.getItem(key));
@@ -40,8 +39,8 @@ $('.bottom-section').on('focus', '.card-body .card-title', function() {
   })
 
   $(this).on('blur', function() {
-    idea.title = selector.find('.card-title').text();
-    idea.body = selector.find('.card-body').text();
+    ideabox.title = selector.find('.card-title').text();
+    ideabox.body = selector.find('.card-body').text();
     localStorage.setItem(key, JSON.stringify(ideabox));
   })
 })

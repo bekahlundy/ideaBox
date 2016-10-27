@@ -57,6 +57,7 @@ h1 {
   height: 150px;
   margin: 10px auto;
   overflow:auto;
+  padding: 5px;
   width: 50%;
   word-wrap: break-word;
   text-overflow: hidden;
@@ -141,5 +142,15 @@ h1 {
 
    .card {
      width: 85%;
+   }
+
+   .card-buttons {
+     height: 40px;
+     width: 40px;
+   }
+
+   .thewordquality, .quality {
+     font-size: 20px;
+     margin-bottom: 10px;
    }
 }

@@ -1,26 +1,16 @@
 $(function() {
-  for(var i = 0; localStorage.length > i; i++) {
-    var ideabox = JSON.parse(localStorage.getItem(localStorage.key(i)))
+  for (i=0; localStorage.length>i; i++) {
+    var ideabox = JSON.parse(localStorage.getItem(localStorage.key(i)));
     createCard(ideabox);
   }
-})
+});
 
 function Idea(title, body, id) {
   this.title= title;
   this.body = body;
   this.id = id;
   this.quality = 'swill';
-}
-
-$('.save-button').on('click', function() {
-  var title = $('.input-title').val();
-  var body = $('.input-body').val();
-  var ideaBox = new Idea(title, body, Date.now());
-  var key = ideaBox.id;
-  localStorage.setItem(key, JSON.stringify(ideaBox));
-  createCard(ideaBox);
-  emptyInputs();
-})
+};
 
 function createCard(idea) {
   $('.bottom-section').prepend(
@@ -34,40 +24,48 @@ function createCard(idea) {
     <p class='quality'>${idea.quality}</p>
     </li>`
   )
-};
+}
+
+$('.bottom-section').on('focus', '.card-body, .card-title', function() {
+  var selector = $(this).closest('.card');
+  var key = selector.attr('id');
+  var ideabox = JSON.parse(localStorage.getItem(key));
+  $(this).on('keydown', function(event) {
+    if(event.keyCode === 13){
+      event.preventDefault();
+      $(this).blur();
+      return false;
+    }
+  })
+
+  $(this).on('blur', function() {
+    ideabox.title = selector.find('.card-title').text();
+    ideabox.body = selector.find('.card-body').text();
+    localStorage.setItem(key, JSON.stringify(ideabox));
+  })
+})
+
+$('.save-button').on('click', function() {
+  var title = $('.input-title').val();
+  var body = $('.input-body').val();
+  var ideaBox = new Idea(title, body, Date.now());
+  var key = ideaBox.id;
+  localStorage.setItem(key, JSON.stringify(ideaBox));
+  createCard(ideaBox);
+  emptyInputs();
+})
+
 
 $('.bottom-section').on('click', '.upvote, .downvote', function() {
+  var ideaCard = $(this).closest('.card');
   var selector = $(this).attr('class');
-  var quality = $(this).closest('.card').find('.quality');
+  var quality = ideaCard.find('.quality');
   var newQuality = getNewQuality(selector, quality.text());
-  var key = $(this).closest('.card').attr('id');
+  var key = ideaCard.attr('id');
   var ideaBox = JSON.parse(localStorage.getItem(key));
   ideaBox.quality = newQuality;
   localStorage.setItem(key, JSON.stringify(ideaBox));
   quality.text(newQuality);
-})
-
-$('.bottom-section').on('click', '.delete', function() {
-  $(this).parent('li').remove();
-  var selector = $(this).closest('.card');
-  localStorage.removeItem(selector.attr('id'));
-  $(selector).remove();
-})
-
-$('.input-title, .input-body').on('keydown', function(event) {
-  if (event.keyCode === 13)
-      $('.save-button').click();
-})
-
-$('.input-search').on('keyup', function() {
-  var searchValue = $(this).val().toLowerCase();
-  $('.card').each(function() {
-    var titleText = $(this).find('.card-title').text().toLowerCase();
-    var bodyText = $(this).find('.card-body').text().toLowerCase();
-    titleText.indexOf(searchValue) !== -1 ||
-    bodyText.indexOf(searchValue) !== -1
-      ? $(this).show() : $(this).hide();
-    });
 })
 
 function getNewQuality(selector, quality) {
@@ -81,24 +79,44 @@ function getNewQuality(selector, quality) {
 function upVote(quality) {
   switch (quality) {
     case 'swill':
-      return 'plausible';
+    return 'plausible';
     case 'plausible':
-      return 'genius';
+    return 'genius';
     default:
-      return "genius";
+    return "genius";
   }
 }
 
 function downVote(quality) {
   switch (quality) {
     case 'genius':
-      return 'plausible';
+    return 'plausible';
     case 'plausible':
-      return 'swill';
+    return 'swill';
     default:
-      return "swill";
+    return "swill";
   }
 }
+
+$('.bottom-section').on('click', '.delete', function() {
+  var selector = $(this).closest('.card');
+  localStorage.removeItem(selector.attr('id'));
+  selector.remove();
+})
+
+$('.input-search').on('keyup', function() {
+  var searchValue = $(this).val().toLowerCase();
+  $('.card').each(function() {
+    var titleText = $(this).find('.card-title').text().toLowerCase();
+    var bodyText = $(this).find('.card-body').text().toLowerCase();
+    titleText.indexOf(searchValue) !== -1 || bodyText.indexOf(searchValue) !== -1 ? $(this).show() : $(this).hide();
+  });
+})
+
+$('.input-title, .input-body').on('keydown', function(event) {
+  if (event.keyCode === 13)
+  $('.save-button').click();
+})
 
 function emptyInputs() {
   $('.input-title').val('');

@@ -99,7 +99,6 @@ function downVote(quality) {
 }
 
 $('.bottom-section').on('click', '.delete', function() {
-  // $(this).parent('li').remove();
   var selector = $(this).closest('.card');
   localStorage.removeItem(selector.attr('id'));
   selector.remove();
@@ -123,5 +122,3 @@ function emptyInputs() {
   $('.input-title').val('');
   $('.input-body').val('');
 }
-
-$('.card').sort()

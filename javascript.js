@@ -1,3 +1,5 @@
+// refactor
+
 $(function() {
   for (i=0; localStorage.length>i; i++) {
     var ideabox = JSON.parse(localStorage.getItem(localStorage.key(i)));
